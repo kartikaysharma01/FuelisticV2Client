@@ -1,5 +1,12 @@
 package com.example.fuelisticv2client.fuelisticv2client.Common;
 
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
+import android.widget.TextView;
+
 import com.example.fuelisticv2client.fuelisticv2client.Model.UserModel;
 
 import java.util.Random;
@@ -37,7 +44,7 @@ public class Common {
     }
 
     public static String getDayOfWeek(int i) {
-        i = i+1;
+        i = i - 1;
         switch (i){
             case 1:
                 return "Monday";
@@ -56,5 +63,15 @@ public class Common {
             default:
                 return "Unknown";
         }
+    }
+
+    public static void setSpanString(String welcome, String fullName, TextView textView) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        builder.append(welcome);
+        SpannableString spannableString = new SpannableString(fullName);
+        StyleSpan boldSpan = new StyleSpan(Typeface.BOLD);
+        spannableString.setSpan(boldSpan, 0,fullName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.append(spannableString);
+        textView.setText(builder, TextView.BufferType.SPANNABLE);
     }
 }

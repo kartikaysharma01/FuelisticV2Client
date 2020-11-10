@@ -87,18 +87,15 @@ public class MainActivity extends AppCompatActivity {
         userRef = FirebaseDatabase.getInstance().getReference(Common.USER_REFERENCES);
         firebaseAuth = FirebaseAuth.getInstance();
         dialog = new SpotsDialog.Builder().setCancelable(false).setContext(this).build();
-        listener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null){
-                    //Already logged in
-                    checkUserFromFirebase(user);
-                }
-                else{
-                    startActivity(new Intent(MainActivity.this, AppStartupScreen.class));
-                    finish();
-                }
+        listener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if(user != null){
+                //Already logged in
+                checkUserFromFirebase(user);
+            }
+            else{
+                startActivity(new Intent(MainActivity.this, AppStartupScreen.class));
+                finish();
             }
         };
     }

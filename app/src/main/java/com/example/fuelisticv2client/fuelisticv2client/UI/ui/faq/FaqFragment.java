@@ -1,4 +1,4 @@
-package com.example.fuelisticv2client.fuelisticv2client.UI.ui.slideshow;
+package com.example.fuelisticv2client.fuelisticv2client.UI.ui.faq;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,15 +15,15 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.fuelisticv2client.R;
 
 
-public class SlideshowFragment extends Fragment {
+public class FaqFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private FaqViewModel slideshowViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+                ViewModelProviders.of(this).get(FaqViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_faq, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
         slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

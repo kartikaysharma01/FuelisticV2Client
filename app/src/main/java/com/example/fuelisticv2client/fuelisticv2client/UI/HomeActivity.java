@@ -1,19 +1,25 @@
 package com.example.fuelisticv2client.fuelisticv2client.UI;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuelisticv2client.R;
+import com.example.fuelisticv2client.fuelisticv2client.Common.Common;
+import com.example.fuelisticv2client.fuelisticv2client.LoginSignUp.AppStartupScreen;
 import com.example.fuelisticv2client.fuelisticv2client.UI.ui.PlaceOrder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -50,7 +56,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_my_order, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_my_order, R.id.nav_faq)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -58,6 +64,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupWithNavController(navigationView, navController);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.bringToFront();
+
+        //hello user at the header vIEW
+        View headerView = navigationView.getHeaderView(0);
+        TextView txt_hello = headerView.findViewById(R.id.txt_hello);
+        Common.setSpanString("Hello,\n", Common.currentUser.getFullName(), txt_hello);
+
+
     }
 
     @Override
@@ -88,8 +101,40 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 navController.navigate(R.id.nav_my_order);
                 break;
 
+            case R.id.nav_faq:
+                navController.navigate(R.id.nav_faq);
+                break;
 
+            case R.id.nav_logout:
+                logOut();
+                break;
         }
         return true;
+    }
+
+    private void logOut() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("SignOut")
+                .setMessage("Are you sure you want to log out?")
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Common.currentUser = null;
+                FirebaseAuth.getInstance().signOut();
+
+                Intent intent = new Intent(HomeActivity.this, AppStartupScreen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 }

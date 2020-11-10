@@ -10,6 +10,6 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_myOrders">My Orders</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_faq">FAQs</string>
     <string name="order_statistics">Order Statistics</string>
 </resources>

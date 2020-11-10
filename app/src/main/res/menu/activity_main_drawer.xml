@@ -6,27 +6,26 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/menu_home" />
 
         <item
             android:id="@+id/nav_my_order"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_baseline_local_shipping_24"
             android:title="@string/menu_myOrders" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
 
         <item
-            android:id="@+id/nav__faq"
+            android:id="@+id/nav_faq"
+            android:icon="@drawable/ic_baseline_question_answer_24"
             android:title="FAQs"/>
         <item
-            android:id="@+id/nav__wallet"
+            android:id="@+id/nav_wallet"
+            android:icon="@drawable/ic_baseline_account_balance_wallet_24"
             android:title="My Wallet"/>
 
         <item
-            android:id="@+id/nav__goldMem"
+            android:id="@+id/nav_goldUpgrade"
+            android:icon="@drawable/ic_baseline_backup_24"
             android:title="Gold Membership"/>
 
     </group>
@@ -38,10 +37,12 @@
 
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav__myProfile"
+                    android:id="@+id/nav_myProfile"
+                    android:icon="@drawable/ic_baseline_assignment_ind_24"
                     android:title="My Profile" />
                 <item
-                    android:id="@+id/nav__logout"
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/ic_baseline_exit_to_app_24"
                     android:title="Logout" />
             </group>
 
@@ -56,10 +57,13 @@
             <group android:checkableBehavior="single">
 
                 <item
-                    android:id="@+id/nav__sellFuel"
-                    android:title="Sell Fuel !"/>
+                    android:id="@+id/nav_sellFuel"
+                    android:title="Sell Fuel !"
+                    android:icon="@drawable/ic_baseline_business_center_24"
+                    />
                 <item
-                    android:id="@+id/nav__contactUs"
+                    android:id="@+id/nav_contactUs"
+                    android:icon="@drawable/ic_baseline_phone_in_talk_24"
                     android:title="Contact Us"/>
             </group>
 

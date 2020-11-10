@@ -1,14 +1,14 @@
-package com.example.fuelisticv2client.fuelisticv2client.UI.ui.slideshow;
+package com.example.fuelisticv2client.fuelisticv2client.UI.ui.faq;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class FaqViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public FaqViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is slideshow fragment");
     }
