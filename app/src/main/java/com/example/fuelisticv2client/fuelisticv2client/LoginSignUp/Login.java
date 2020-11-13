@@ -99,6 +99,8 @@ public class Login extends AppCompatActivity {
                         String _gender = snapshot.child(_completePhoneNo).child("gender").getValue(String.class);
                         String _username = snapshot.child(_completePhoneNo).child("username").getValue(String.class);
                         String _address = snapshot.child(_completePhoneNo).child("address").getValue(String.class);
+                        String _totalOrderQuantity = snapshot.child(_completePhoneNo).child("totalOrderQuantity").getValue(String.class);
+
 
                         //create a Session
                         userModel.setPhoneNo(_phoneNo);
@@ -109,6 +111,7 @@ public class Login extends AppCompatActivity {
                         userModel.setDateOfBirth(_dateOfBirth);
                         userModel.setPassword(_password);
                         userModel.setGender(_gender);
+                        userModel.setTotalOrderQuantity(_totalOrderQuantity);
 
                         progressbar.setVisibility(View.GONE);
                         gotoHomeActivity(userModel);

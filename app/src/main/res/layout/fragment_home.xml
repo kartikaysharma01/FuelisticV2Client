@@ -75,7 +75,7 @@
 
 
                         <TextView
-                            android:id="@+id/payment_label"
+                            android:id="@+id/diesel_today"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
@@ -87,10 +87,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/payment_label"
+                            android:layout_below="@id/diesel_today"
                             android:layout_centerHorizontal="true"
                             android:includeFontPadding="false"
-                            android:text="Diesel today"
+                            android:text="Diesel today\n         (lt.)"
                             android:textSize="20sp" />
 
                     </RelativeLayout>

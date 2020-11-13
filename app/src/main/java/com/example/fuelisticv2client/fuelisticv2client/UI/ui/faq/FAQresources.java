@@ -4,30 +4,30 @@ public class FAQresources
 {
     public String q1 = "What is Fuelistic?";
     public String q2 = "Which areas are being serviced by Fuelistic right now?";
-    public String q3 = "What are Fuelistic's hpurs of operation?";
+    public String q3 = "What are Fuelistic's hours of operation?";
     public String q4 = "Where does Fueslistic source its fuel from?";
     public String ques5 = "Can I schedule my future requirement of fuel instead of ordering "
                 + "when i need?";
     public String q6 = "Is doorstep refuelling a new and dangerous concept?";
-    public String q7 = "Is doorstep delivery of diesel an petrol safe?";
+    public String q7 = "Is doorstep delivery of diesel and petrol safe?";
     public String q8 = "Is there a risk from static electricity and other sources during delivery?";
     public String q9 = "Is there a risk of vehicle exploding during delivery?";
 
-    public String an1 = "MyPetrolPump is an online platform to provide doorstep delivery of diesel" +
+    public String an1 = "Fuelistic is an online platform to provide doorstep delivery of diesel" +
             " for your generator (DG sets) / cars / fleet vehicles etc. in a safe, reliable, and " +
             "efficient way. You can place your order online and the fuel will be delivered to your " +
-            "location in specialized Refuellers (MyPetrolPump Tankers) according to your chosen " +
-            "schedule. So you don't need to look for \"Petrol Pump Stations near me\" to refuel your " +
+            "location in specialized Bowsers (Fuelistic Tankers) according to your chosen " +
+            "schedule. So you don't need to look for \"Fuelistic Stations near me\" to refuel your " +
             "cars and DG sets. We are making refuelling smarter! ";
-    public String an2 = "Our services are available in Bangalore, Hyderabad And Pune ." +
+    public String an2 = "Our services are available in Delhi NCR ." +
             "We will soon be adding other cities.";
-    public String an3 = "Our vehicles operate and provide deliveries between 6Am to 3AM.";
-    public String an4 = "MyPetrolPump sources fuel from authorized and selected dealers of oil" +
+    public String an3 = "Our vehicles operate and provide deliveries between 6AM to 3AM.";
+    public String an4 = "Fuelistic sources fuel from authorized and selected dealers of oil" +
             " companies near your location. We follow a strict quality assurance program to ensure" +
-            " every drop of fuel is checked for quality before it gets loaded into our Refuellers " +
+            " every drop of fuel is checked for quality before it gets loaded into our Bowsers " +
             "for delivery. We do not purchase or stock fuel prior to delivery. Fuel is sourced only " +
             "upon receiving the orders from customers. ";
-    public String an5 = "Yes. Please contact +91..... and we will gladly help as one of our "
+    public String an5 = "Yes. Please contact +917023696496 and we will gladly help as one of our "
             + "scheduled delivery customers.";
     public String an6 = "Doorstep refuelling is neither dangerous nor a new concept. Let us compare" +
             " it with more hazardous gas fuel. Over 18 million metric tonnes of LPG is consumed in India" +
@@ -39,7 +39,7 @@ public class FAQresources
             "less than 1,000 " +
             "Litre capacities. Diesel and Petrol are not pressurized and are much safer to transport, " +
             "especially in small quantities. Our Operators are IRTE trained along with getting extensive " +
-            "training on safe handling of fuel. Our Refuellers are designed fabricated as per guidelines " +
+            "training on safe handling of fuel. Our Bowsers are designed fabricated as per guidelines " +
             "in" +
             " Petroleum Act and Rules by PESO (Petroleum Explosive Safety Organization of India)" +
             " approved fabricator. Additionally, they are equipped with spill containment kits, fire" +

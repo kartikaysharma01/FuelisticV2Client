@@ -13,13 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder2nd" />
-        <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder"/>
+
         <activity
             android:name=".fuelisticv2client.UI.HomeActivity"
             android:label="@string/title_activity_home"
@@ -31,6 +27,7 @@
         <activity android:name=".fuelisticv2client.LoginSignUp.Login" />
         <activity android:name=".fuelisticv2client.LoginSignUp.AppStartupScreen" />
         <activity android:name=".fuelisticv2client.LoginSignUp.MainActivity" />
+
         <activity android:name=".fuelisticv2client.LoginSignUp.LogoSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

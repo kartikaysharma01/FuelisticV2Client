@@ -2,12 +2,13 @@ package com.example.fuelisticv2client.fuelisticv2client.Model;
 
 public class UserModel {
 
-    private String fullName, phoneNo, email, username, password,  dateOfBirth, gender,address;
+    private String fullName, phoneNo, email, username, password, dateOfBirth, gender, address;
+    private String totalOrderQuantity;
 
     public UserModel() {
     }
 
-    public UserModel(String fullName, String phoneNo, String email, String username, String password, String dateOfBirth, String gender, String address) {
+    public UserModel(String fullName, String phoneNo, String email, String username, String password, String dateOfBirth, String gender, String address, String totalOrderQuantity) {
         this.fullName = fullName;
         this.phoneNo = phoneNo;
         this.email = email;
@@ -16,6 +17,7 @@ public class UserModel {
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.address = address;
+        this.totalOrderQuantity = totalOrderQuantity;
     }
 
     public String getFullName() {
@@ -80,5 +82,13 @@ public class UserModel {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getTotalOrderQuantity() {
+        return totalOrderQuantity;
+    }
+
+    public void setTotalOrderQuantity(String totalOrderQuantity) {
+        this.totalOrderQuantity = totalOrderQuantity;
     }
 }
