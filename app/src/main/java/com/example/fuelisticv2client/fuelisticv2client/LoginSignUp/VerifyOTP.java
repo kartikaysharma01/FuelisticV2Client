@@ -27,6 +27,8 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.concurrent.TimeUnit;
 
@@ -172,8 +174,28 @@ public class VerifyOTP extends AppCompatActivity {
     }
 
     private void gotoHomeActivity(UserModel userModel) {
-        Common.currentUser = userModel;
-        startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
-        finish();
+
+        FirebaseInstanceId.getInstance()
+                .getInstanceId()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(VerifyOTP.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        Common.currentUser = userModel;
+                        startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
+                        finish();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                Common.currentUser = userModel;
+                Common.updateToken(VerifyOTP.this, task.getResult().getToken());
+                startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
+                finish();
+            }
+
+        });
+
     }
 }

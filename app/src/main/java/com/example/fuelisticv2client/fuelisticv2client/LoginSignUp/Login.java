@@ -20,6 +20,9 @@ import com.example.fuelisticv2client.R;
 import com.example.fuelisticv2client.fuelisticv2client.Common.Common;
 import com.example.fuelisticv2client.fuelisticv2client.Model.UserModel;
 import com.example.fuelisticv2client.fuelisticv2client.UI.HomeActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.hbb20.CountryCodePicker;
 
 public class Login extends AppCompatActivity {
@@ -140,9 +145,27 @@ public class Login extends AppCompatActivity {
     }
 
     private void gotoHomeActivity(UserModel userModel) {
-        Common.currentUser = userModel;
-        startActivity(new Intent(Login.this, HomeActivity.class));
-        finish();
+        FirebaseInstanceId.getInstance()
+                .getInstanceId()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        Common.currentUser = userModel;
+                        startActivity(new Intent(Login.this, HomeActivity.class));
+                        finish();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                Common.currentUser = userModel;
+                Common.updateToken(Login.this, task.getResult().getToken());
+                startActivity(new Intent(Login.this, HomeActivity.class));
+                finish();
+            }
+
+        });
     }
 
 
