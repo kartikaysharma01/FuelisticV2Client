@@ -43,7 +43,7 @@ public class ProfileFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
-        userName = userName.findViewById(R.id.userName);
+        userName = userName.findViewById(R.id.profile_userName);
         userName.setText(Common.currentUser.getUsername());
 
         ItemAdapter itemAdapter = new ItemAdapter();
