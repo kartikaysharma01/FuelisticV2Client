@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class ProfileFragment extends Fragment
 {
-    TextView userName;
+    public TextView userName;
     //private ProfileViewModel mViewModel;
 
     private RecyclerView mRecycleview;
@@ -43,7 +44,7 @@ public class ProfileFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
 
-        userName = userName.findViewById(R.id.profile_userName);
+        userName = view.findViewById(R.id.profile_userName);
         userName.setText(Common.currentUser.getUsername());
 
         ItemAdapter itemAdapter = new ItemAdapter();
@@ -83,11 +84,11 @@ public class ProfileFragment extends Fragment
         mList.add(itemAdapter);
 
         ctx = view.getContext();
-        mRecycleview = mRecycleview.findViewById(R.id.profileRecycler);
+        mRecycleview = view.findViewById(R.id.profileRecycler);
         mAdapter = new ProfileListAdapter(mList, ctx);
         mRecycleview.setAdapter(mAdapter);
-
-        mAdapter.notifyDataSetChanged();
+        mRecycleview.setLayoutManager(new LinearLayoutManager(ctx));
+        //mAdapter.notifyDataSetChanged();
 
         return view;
     }

@@ -65,6 +65,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             desc = (TextInputLayout)itemView.findViewById(R.id.inputDesc);
             val = (TextInputEditText)itemView.findViewById(R.id.inputValue);
             img = (ImageView)itemView.findViewById(R.id.img_item);
+            val.setEnabled(false);
         }
     }
 }
