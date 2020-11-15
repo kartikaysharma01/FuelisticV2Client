@@ -13,7 +13,7 @@ public class FAQresources
     public String q8 = "Is there a risk from static electricity and other sources during delivery?";
     public String q9 = "Is there a risk of vehicle exploding during delivery?";
 
-    public String an1 = "MyPetrolPump is an online platform to provide doorstep delivery of diesel" +
+    public String an1 = "Fuelistic is an online platform to provide doorstep delivery of diesel" +
             " for your generator (DG sets) / cars / fleet vehicles etc. in a safe, reliable, and " +
             "efficient way. You can place your order online and the fuel will be delivered to your " +
             "location in specialized Refuellers (MyPetrolPump Tankers) according to your chosen " +
@@ -22,7 +22,7 @@ public class FAQresources
     public String an2 = "Our services are available in Bangalore, Hyderabad And Pune ." +
             "We will soon be adding other cities.";
     public String an3 = "Our vehicles operate and provide deliveries between 6Am to 3AM.";
-    public String an4 = "MyPetrolPump sources fuel from authorized and selected dealers of oil" +
+    public String an4 = "Fuelistic sources fuel from authorized and selected dealers of oil" +
             " companies near your location. We follow a strict quality assurance program to ensure" +
             " every drop of fuel is checked for quality before it gets loaded into our Refuellers " +
             "for delivery. We do not purchase or stock fuel prior to delivery. Fuel is sourced only " +
