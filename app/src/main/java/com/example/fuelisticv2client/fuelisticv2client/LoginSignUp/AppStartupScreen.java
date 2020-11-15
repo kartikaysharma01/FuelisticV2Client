@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.fuelisticv2client.R;
 
@@ -18,26 +19,18 @@ public class AppStartupScreen extends AppCompatActivity {
         setContentView(R.layout.activity_app_startup_screen);
     }
 
-    public void callSignUpScreenfromStart(View view) {
+    public void callSignUpScreenFromStart(View view) {
         Intent intent = new Intent(AppStartupScreen.this, SignUp.class);
         startActivity(intent);
     }
 
-    public void callLoginScreenfromStart(View view) {
+    public void callLoginScreenFromStart(View view) {
         Intent intent = new Intent(AppStartupScreen.this, Login.class);
         startActivity(intent);
     }
 
-
-//    public void callLoginScreen(View view){
-//        Intent intent = new Intent(AppStartupScreen.this, Login.class);
-//        startActivity(intent);
-//    }
-//
-//    public void callSignUpScreen(View view){
-//        Intent intent = new Intent(AppStartupScreen.this, SignUp.class);
-//        startActivity(intent);
-//    }
-
+    public void goToSellerApp(View view) {
+        Toast.makeText(this, "The user will be forwarded to Seller app in play store", Toast.LENGTH_SHORT).show();
+    }
 
 }

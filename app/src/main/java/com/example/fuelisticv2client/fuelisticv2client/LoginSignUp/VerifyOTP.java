@@ -3,6 +3,7 @@ package com.example.fuelisticv2client.fuelisticv2client.LoginSignUp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.fuelisticv2client.fuelisticv2client.Common.Common;
 import com.example.fuelisticv2client.fuelisticv2client.Model.UserModel;
 import com.example.fuelisticv2client.fuelisticv2client.UI.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
@@ -25,8 +27,12 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.concurrent.TimeUnit;
+
+import dmax.dialog.SpotsDialog;
 
 public class VerifyOTP extends AppCompatActivity {
 
@@ -35,6 +41,7 @@ public class VerifyOTP extends AppCompatActivity {
     TextView otpDescriptionText;
     String codeBySystem;
 
+    private AlertDialog dialog;
     private DatabaseReference userRef;
 
     @Override
@@ -121,16 +128,13 @@ public class VerifyOTP extends AppCompatActivity {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
         firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            storeNewUserData();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        storeNewUserData();
 
-                        } else {
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(VerifyOTP.this, "Verification Not Completed! Try again.", Toast.LENGTH_SHORT).show();
-                            }
+                    } else {
+                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(VerifyOTP.this, "Verification Not Completed! Try again.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -139,6 +143,7 @@ public class VerifyOTP extends AppCompatActivity {
     private void storeNewUserData() {
 
         userRef = FirebaseDatabase.getInstance().getReference(Common.USER_REFERENCES);
+        dialog = new SpotsDialog.Builder().setContext(this).setCancelable(false).build();
 
         UserModel userModel= new UserModel();
         userModel.setPhoneNo(phoneNo);
@@ -149,22 +154,48 @@ public class VerifyOTP extends AppCompatActivity {
         userModel.setDateOfBirth(dateOfBirth);
         userModel.setPassword(password);
         userModel.setGender(gender);
+        userModel.setTotalOrderQuantity("0");
 
+        dialog.show();
         userRef.child(phoneNo).setValue(userModel)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                .addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(VerifyOTP.this, "Congratulations!! Registration Complete." , Toast.LENGTH_SHORT).show();
-                            gotoHomeActivity(userModel);
-                        }
+                    public void onFailure(@NonNull Exception e) {
+                        dialog.dismiss();
+                        Toast.makeText(VerifyOTP.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        dialog.dismiss();
+                        Toast.makeText(VerifyOTP.this, "Congratulations!! Registration Complete." , Toast.LENGTH_SHORT).show();
+                        gotoHomeActivity(userModel);
                     }
                 });
     }
 
     private void gotoHomeActivity(UserModel userModel) {
-        Common.currentUser = userModel;
-        startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
-        finish();
+
+        FirebaseInstanceId.getInstance()
+                .getInstanceId()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(VerifyOTP.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        Common.currentUser = userModel;
+                        startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
+                        finish();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                Common.currentUser = userModel;
+                Common.updateToken(VerifyOTP.this, task.getResult().getToken());
+                startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
+                finish();
+            }
+
+        });
+
     }
 }

@@ -60,7 +60,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/buenard_bold"
+                    android:fontFamily="@font/brandon_medium"
                     android:inputType="phone">
 
 

@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.fuelisticv2client.R;
+import com.example.fuelisticv2client.fuelisticv2client.Common.Common;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.BarData;
@@ -34,6 +35,12 @@ import butterknife.Unbinder;
 
 public class HomeFragment extends Fragment {
 
+    @BindView(R.id.diesel_today)
+    TextView diesel_today;
+
+    @BindView(R.id.total_order)
+    TextView total_order;
+
     private HomeViewModel homeViewModel;
     Unbinder unbinder;
 //    @BindView(R.id.chart)
@@ -46,6 +53,8 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         unbinder= ButterKnife.bind(this,root);
+        diesel_today.setText("Rs " + String.valueOf(Common.diesel_price));
+        total_order.setText(Common.currentUser.getTotalOrderQuantity() + " LT.");
 
         return root;
     }

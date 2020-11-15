@@ -24,7 +24,11 @@ import android.widget.Toast;
 import com.example.fuelisticv2client.R;
 import com.example.fuelisticv2client.fuelisticv2client.Callback.ILoadTimeFromFirebaseListener;
 import com.example.fuelisticv2client.fuelisticv2client.Common.Common;
+import com.example.fuelisticv2client.fuelisticv2client.Model.FCMResponse;
+import com.example.fuelisticv2client.fuelisticv2client.Model.FCMSendData;
 import com.example.fuelisticv2client.fuelisticv2client.Model.Order;
+import com.example.fuelisticv2client.fuelisticv2client.Remote.IFCMService;
+import com.example.fuelisticv2client.fuelisticv2client.Remote.RetrofitFCMClient;
 import com.example.fuelisticv2client.fuelisticv2client.UI.HomeActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -43,14 +47,21 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
 
 public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFirebaseListener {
 
@@ -58,6 +69,7 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
     LocationRequest locationRequest;
     LocationCallback locationCallback;
     FusedLocationProviderClient fusedLocationProviderClient;
+    IFCMService ifcmService;
     Location currentLocation;
 
     EditText edit_address;
@@ -79,6 +91,7 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
         setContentView(R.layout.activity_place_order2nd);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        ifcmService = RetrofitFCMClient.getInstance().create(IFCMService.class);
         listener = this;
 
         //get data from prev screen
@@ -102,8 +115,8 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
 
         //Data
         edit_address.setText(Common.currentUser.getAddress());
-        totalPrice = Math.round(totalPrice * (Common.diesel_price) * Integer.parseInt(orderQuantity) );
-        place_order_total_price.setText("Rs. "+ totalPrice );
+        totalPrice = Math.round(totalPrice * (Common.diesel_price) * Integer.parseInt(orderQuantity));
+        place_order_total_price.setText("Rs. " + totalPrice);
 
 
         //Event
@@ -128,7 +141,7 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(PlaceOrder2nd.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PlaceOrder2nd.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 text_address.setVisibility(View.GONE);
                             }
                         })
@@ -200,14 +213,14 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
 
 
     }
 
     @Override
-    public void onStop(){
-        if(fusedLocationProviderClient!=null)
+    public void onStop() {
+        if (fusedLocationProviderClient != null)
             fusedLocationProviderClient.removeLocationUpdates(locationCallback);
 
         compositeDisposable.clear();
@@ -224,7 +237,7 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
 
 
     private void buildLocationCallback() {
-        locationCallback = new LocationCallback(){
+        locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
@@ -235,7 +248,7 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
     }
 
     private void buildLocationRequest() {
-        locationRequest= new LocationRequest();
+        locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(3000);
@@ -244,12 +257,12 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
     }
 
     public void place_Order(View view) {
-        if(rdb_cod.isChecked())
+        if (rdb_cod.isChecked())
             paymentCOD(edit_address.getText().toString(), edit_comment.getText().toString());
     }
 
     private void paymentCOD(String address, String comment) {
-        double finalPrice = totalPrice ;
+        double finalPrice = totalPrice;
         Order order = new Order();
 
         order.setUserName(Common.currentUser.getUsername());
@@ -257,11 +270,10 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
         order.setShippingAddress(address);
         order.setComment(comment);
 
-        if(currentLocation != null){
+        if (currentLocation != null) {
             order.setLat(currentLocation.getLatitude());
             order.setLng(currentLocation.getLongitude());
-        }
-        else{
+        } else {
             order.setLng(-0.1f);
             order.setLat(-0.1f);
         }
@@ -287,7 +299,7 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
             @Override
             public void onDataChange(@androidx.annotation.NonNull DataSnapshot snapshot) {
                 long offset = snapshot.getValue(Long.class);
-                long estimatedServerTimeInMS = System.currentTimeMillis()+offset;
+                long estimatedServerTimeInMS = System.currentTimeMillis() + offset;
 
                 SimpleDateFormat sdf = new SimpleDateFormat("MM DD. YYYY HH:mm");
                 Date resultDate = new Date(estimatedServerTimeInMS);
@@ -310,14 +322,33 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(PlaceOrder2nd.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PlaceOrder2nd.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }).addOnCompleteListener(task -> {
-            Toast.makeText(this, "Order Placed Successfully !!", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                });
+            Map<String, String> notiData = new HashMap<>();
+            notiData.put(Common.NOTI_TITLE, "New Order");
+            notiData.put(Common.NOTI_CONTENT, "You have a new order of "+ orderQuantity+ "litres from " + Common.currentUser.getPhoneNo());
+
+            FCMSendData sendData = new FCMSendData(Common.createTopicOrder() , notiData);
+
+            compositeDisposable.add(ifcmService.sendNotification(sendData)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(fcmResponse -> {
+                Toast.makeText(this, "Order Placed Successfully !!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+                finish();
+
+            }, throwable -> {
+                Toast.makeText(this, "Order Placed Successfully but failure in notifying Seller!!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }));
+
+
+        });
     }
 
     @Override
@@ -328,6 +359,6 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
 
     @Override
     public void onLoadTimeFailed(String message) {
-        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
     }
 }

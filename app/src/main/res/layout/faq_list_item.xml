@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="6dp"
-    android:background="@color/colorAccent">
+    android:background="@drawable/spinner_background">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -19,15 +19,16 @@
                 <TextView
                     android:id="@+id/questionView"
                     android:layout_width="match_parent"
+                    android:fontFamily="@font/acme"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-
                     android:padding="10dp"
                     android:textSize="30sp" />
 
                 <TextView
                     android:id="@+id/answerView"
                     android:layout_width="match_parent"
+                    android:fontFamily="@font/brandon_medium"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/questionView"
                     android:layout_alignParentBottom="@+id/questionView"
