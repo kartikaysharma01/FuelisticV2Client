@@ -11,7 +11,7 @@ import com.example.fuelisticv2client.R;
 
 public class LogoSplash extends AppCompatActivity {
 
-    public static int SPLASH_SCREEN= 3000;
+    public static int SPLASH_SCREEN= 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

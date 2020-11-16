@@ -132,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void gotoHomeActivity(UserModel userModel) {
+        dialog.dismiss();
+        Common.currentUser = userModel;
+        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+        finish();
 
         FirebaseInstanceId.getInstance()
                 .getInstanceId()

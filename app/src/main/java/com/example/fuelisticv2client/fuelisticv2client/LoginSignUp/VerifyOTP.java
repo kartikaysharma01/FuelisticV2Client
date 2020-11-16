@@ -158,12 +158,9 @@ public class VerifyOTP extends AppCompatActivity {
 
         dialog.show();
         userRef.child(phoneNo).setValue(userModel)
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        dialog.dismiss();
-                        Toast.makeText(VerifyOTP.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(e -> {
+                    dialog.dismiss();
+                    Toast.makeText(VerifyOTP.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }).addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         dialog.dismiss();
@@ -175,27 +172,31 @@ public class VerifyOTP extends AppCompatActivity {
 
     private void gotoHomeActivity(UserModel userModel) {
 
-        FirebaseInstanceId.getInstance()
-                .getInstanceId()
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(VerifyOTP.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+        Common.currentUser = userModel;
+        startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
+        finish();
 
-                        Common.currentUser = userModel;
-                        startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
-                        finish();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-            @Override
-            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                Common.currentUser = userModel;
-                Common.updateToken(VerifyOTP.this, task.getResult().getToken());
-                startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
-                finish();
-            }
-
-        });
+//        FirebaseInstanceId.getInstance()
+//                .getInstanceId()
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(VerifyOTP.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                        Common.currentUser = userModel;
+//                        startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
+//                        finish();
+//                    }
+//                }).addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+//                Common.currentUser = userModel;
+//                Common.updateToken(VerifyOTP.this, task.getResult().getToken());
+//                startActivity(new Intent(VerifyOTP.this, HomeActivity.class));
+//                finish();
+//            }
+//
+//        });
 
     }
 }

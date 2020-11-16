@@ -13,10 +13,17 @@ import android.widget.Toast;
 import com.example.fuelisticv2client.R;
 import com.example.fuelisticv2client.fuelisticv2client.Common.Common;
 import com.example.fuelisticv2client.fuelisticv2client.LoginSignUp.AppStartupScreen;
+import com.example.fuelisticv2client.fuelisticv2client.LoginSignUp.MainActivity;
 import com.example.fuelisticv2client.fuelisticv2client.UI.ui.PlaceOrder;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -38,10 +45,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN );
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        updateToken();
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +83,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void updateToken() {
+        FirebaseInstanceId.getInstance()
+                .getInstanceId()
+                .addOnFailureListener(e -> Toast.makeText(HomeActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show())
+                .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        Common.updateToken(HomeActivity.this, instanceIdResult.getToken());
+                    }
+                });
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
@@ -90,7 +113,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setChecked(true);
         drawer.closeDrawers();
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_home:
                 navController.navigate(R.id.nav_home);
                 break;
@@ -129,7 +152,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Common.currentUser = null;
                 FirebaseAuth.getInstance().signOut();
 
-                Intent intent = new Intent(HomeActivity.this, AppStartupScreen.class);
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();

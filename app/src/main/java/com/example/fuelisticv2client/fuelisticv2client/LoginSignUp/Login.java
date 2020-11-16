@@ -106,7 +106,6 @@ public class Login extends AppCompatActivity {
                         String _address = snapshot.child(_completePhoneNo).child("address").getValue(String.class);
                         String _totalOrderQuantity = snapshot.child(_completePhoneNo).child("totalOrderQuantity").getValue(String.class);
 
-
                         //create a Session
                         userModel.setPhoneNo(_phoneNo);
                         userModel.setFullName(_fullName);
@@ -145,27 +144,32 @@ public class Login extends AppCompatActivity {
     }
 
     private void gotoHomeActivity(UserModel userModel) {
-        FirebaseInstanceId.getInstance()
-                .getInstanceId()
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                        Common.currentUser = userModel;
-                        startActivity(new Intent(Login.this, HomeActivity.class));
-                        finish();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-            @Override
-            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                Common.currentUser = userModel;
-                Common.updateToken(Login.this, task.getResult().getToken());
-                startActivity(new Intent(Login.this, HomeActivity.class));
-                finish();
-            }
+        Common.currentUser = userModel;
+        startActivity(new Intent(Login.this, HomeActivity.class));
+        finish();
 
-        });
+//        FirebaseInstanceId.getInstance()
+//                .getInstanceId()
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(Login.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                        Common.currentUser = userModel;
+//                        startActivity(new Intent(Login.this, HomeActivity.class));
+//                        finish();
+//                    }
+//                }).addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+//                Common.currentUser = userModel;
+////                Common.updateToken(Login.this, task.getResult().getToken());
+//                startActivity(new Intent(Login.this, HomeActivity.class));
+//                finish();
+//            }
+//
+//        });
     }
 
 
@@ -184,7 +188,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void showCustomDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("No internet connection")
                 .setCancelable(false)
                 .setPositiveButton("Connect", (dialogInterface, i) -> startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)))
