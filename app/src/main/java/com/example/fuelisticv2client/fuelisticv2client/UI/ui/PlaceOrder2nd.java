@@ -12,10 +12,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -24,9 +22,8 @@ import android.widget.Toast;
 import com.example.fuelisticv2client.R;
 import com.example.fuelisticv2client.fuelisticv2client.Callback.ILoadTimeFromFirebaseListener;
 import com.example.fuelisticv2client.fuelisticv2client.Common.Common;
-import com.example.fuelisticv2client.fuelisticv2client.Model.FCMResponse;
 import com.example.fuelisticv2client.fuelisticv2client.Model.FCMSendData;
-import com.example.fuelisticv2client.fuelisticv2client.Model.Order;
+import com.example.fuelisticv2client.fuelisticv2client.Model.OrderModel;
 import com.example.fuelisticv2client.fuelisticv2client.Remote.IFCMService;
 import com.example.fuelisticv2client.fuelisticv2client.Remote.RetrofitFCMClient;
 import com.example.fuelisticv2client.fuelisticv2client.UI.HomeActivity;
@@ -35,9 +32,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,16 +47,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
 
 public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFirebaseListener {
 
@@ -263,7 +255,7 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
 
     private void paymentCOD(String address, String comment) {
         double finalPrice = totalPrice;
-        Order order = new Order();
+        OrderModel order = new OrderModel();
 
         order.setUserName(Common.currentUser.getUsername());
         order.setUserPhone(Common.currentUser.getPhoneNo());
@@ -293,7 +285,7 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
 
     }
 
-    private void syncLocalTimeWithGlobalTime(Order order) {
+    private void syncLocalTimeWithGlobalTime(OrderModel order) {
         final DatabaseReference offsetRef = FirebaseDatabase.getInstance().getReference(".info/serverTimeOffset");
         offsetRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -314,7 +306,7 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
         });
     }
 
-    private void writeOrderToFirebase(Order order) {
+    private void writeOrderToFirebase(OrderModel order) {
         FirebaseDatabase.getInstance()
                 .getReference(Common.ORDER_REF)
                 .child(Common.createOrderNumber())
@@ -352,7 +344,7 @@ public class PlaceOrder2nd extends AppCompatActivity implements ILoadTimeFromFir
     }
 
     @Override
-    public void onLoadTimeSuccess(Order order, long estimateTimeInMs) {
+    public void onLoadTimeSuccess(OrderModel order, long estimateTimeInMs) {
         order.setOrderDate(estimateTimeInMs);
         writeOrderToFirebase(order);
     }

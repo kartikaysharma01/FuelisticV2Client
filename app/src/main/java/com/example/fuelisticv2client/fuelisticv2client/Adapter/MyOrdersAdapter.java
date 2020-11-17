@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fuelisticv2client.R;
 import com.example.fuelisticv2client.fuelisticv2client.Common.Common;
-import com.example.fuelisticv2client.fuelisticv2client.Model.Order;
+import com.example.fuelisticv2client.fuelisticv2client.Model.OrderModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,16 +25,24 @@ import butterknife.Unbinder;
 public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyViewHolder> {
 
     private Context context;
-    private List<Order> orderList;
+    private List<OrderModel> orderList;
     private Calendar calender;
     private SimpleDateFormat simpleDateFormat;
 
 
-    public MyOrdersAdapter(Context context, List<Order> orderList) {
+    public MyOrdersAdapter(Context context, List<OrderModel> orderList) {
         this.context = context;
         this.orderList = orderList;
         calender = Calendar.getInstance();
         simpleDateFormat= new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    }
+
+    public OrderModel getItemAtPosition(int pos){
+        return orderList.get(pos);
+    }
+
+    public void setItemAtPosition(int pos, OrderModel item){
+        orderList.set(pos, item);
     }
 
     @NonNull
