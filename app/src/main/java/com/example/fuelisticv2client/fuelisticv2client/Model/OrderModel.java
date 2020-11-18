@@ -1,6 +1,6 @@
 package com.example.fuelisticv2client.fuelisticv2client.Model;
 
-public class Order {
+public class OrderModel {
     private String userName, userPhone , shippingAddress, comment , transactionId, fuelType, deliveryDate, quantity , deliveryMode;
     private double lat, lng, totalPayment, finalPayment;
     private boolean cod;
@@ -9,7 +9,7 @@ public class Order {
     private int orderStatus;
     private long orderDate;
 
-    public Order() {
+    public OrderModel() {
     }
 
     public String getUserName() {
