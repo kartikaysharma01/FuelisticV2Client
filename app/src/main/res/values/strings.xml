@@ -12,4 +12,5 @@
     <string name="menu_myOrders">My Orders</string>
     <string name="menu_faq">FAQs</string>
     <string name="order_statistics">Order Statistics</string>
+    <string name="update">Update</string>
 </resources>
