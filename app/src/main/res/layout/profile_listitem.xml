@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/img_item">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/inputValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

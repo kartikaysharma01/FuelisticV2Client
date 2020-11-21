@@ -20,7 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
+//import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -36,8 +36,10 @@ import dmax.dialog.SpotsDialog;
 
 public class VerifyOTP extends AppCompatActivity {
 
+
     PinView pinFromUser;
-    String fullName, phoneNo, email, username, password,  dateOfBirth, gender,address, whatToDO;
+    String fullName, phoneNo, email, username,
+            password,  dateOfBirth, gender,address, whatToDO;
     TextView otpDescriptionText;
     String codeBySystem;
 
@@ -47,7 +49,8 @@ public class VerifyOTP extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN );
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView(R.layout.activity_verify_o_t_p);
 
         //hooks
@@ -63,7 +66,7 @@ public class VerifyOTP extends AppCompatActivity {
         gender = getIntent().getStringExtra("gender");
         phoneNo = getIntent().getStringExtra("phoneNo");
         address = getIntent().getStringExtra("address");
-//        whatToDO = getIntent().getStringExtra("whatToDO");
+        //whatToDO = getIntent().getStringExtra("whatToDO");
 
         otpDescriptionText.setText("Enter One Time Password Sent On " + phoneNo);
 
@@ -71,7 +74,8 @@ public class VerifyOTP extends AppCompatActivity {
         
     }
 
-    private void sendVerificationCodeToUser(String phoneNo) {
+    private void sendVerificationCodeToUser(String phoneNo)
+    {
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNo,        // Phone number to verify
@@ -140,7 +144,8 @@ public class VerifyOTP extends AppCompatActivity {
                 });
     }
 
-    private void storeNewUserData() {
+    private void storeNewUserData()
+    {
 
         userRef = FirebaseDatabase.getInstance().getReference(Common.USER_REFERENCES);
         dialog = new SpotsDialog.Builder().setContext(this).setCancelable(false).build();

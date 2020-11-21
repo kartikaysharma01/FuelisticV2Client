@@ -4,22 +4,22 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fuelisticv2client.R;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 
 public class ProfileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
-
     private List<ItemAdapter> mList;
     private Context mContext;
+
     public ProfileListAdapter(List<ItemAdapter> list, Context context)
     {
         super();
@@ -33,9 +33,8 @@ public class ProfileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_listitem,
                 parent, false);
-        ViewHolder viewH = new ViewHolder(v);
 
-        return viewH;
+        return new ViewHolder(v);
     }
 
     @Override
@@ -56,15 +55,15 @@ public class ProfileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder
     {
         public TextInputLayout desc;
-        public TextInputEditText val;
+        public EditText val;
         public ImageView img;
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
 
-            desc = (TextInputLayout)itemView.findViewById(R.id.inputDesc);
-            val = (TextInputEditText)itemView.findViewById(R.id.inputValue);
-            img = (ImageView)itemView.findViewById(R.id.img_item);
+            desc = itemView.findViewById(R.id.inputDesc);
+            val = itemView.findViewById(R.id.inputValue);
+            img = itemView.findViewById(R.id.img_item);
             val.setEnabled(false);
         }
     }

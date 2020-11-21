@@ -175,7 +175,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="200dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     app:cardElevation="10dp">
@@ -185,9 +185,10 @@
                         android:layout_height="match_parent"
                         android:padding="5dp">
 
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/chart"
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/linechart"
                             android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_height="match_parent"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true"
