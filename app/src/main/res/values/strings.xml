@@ -13,4 +13,7 @@
     <string name="menu_faq">FAQs</string>
     <string name="order_statistics">Order Statistics</string>
     <string name="update">Update</string>
+    <string name="forget_password_detail">Provide your account\'s phone number for which you want to reset your password!</string>
+    <string name="email_mobile_number">Phone Number</string>
+    <string name="next">Next</string>
 </resources>
