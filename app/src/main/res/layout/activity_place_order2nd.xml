@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/backsim"
     tools:context=".fuelisticv2client.UI.ui.PlaceOrder2nd">
 
     <RelativeLayout
@@ -30,7 +31,7 @@
             android:fontFamily="@font/aclonica"
             android:text="Place Order"
             android:textColor="@color/colorPrimary"
-            android:textSize="28sp" />
+            android:textSize="30sp" />
 
     </RelativeLayout>
 
@@ -220,9 +221,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:onClick="place_Order"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:fontFamily="@font/aclonica"
-            android:padding="20dp"
+            android:textSize="20dp"
+            android:padding="10dp"
             android:text="Place Order"
             android:textColor="@color/white" />
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@drawable/back"
     android:padding="30dp"
     tools:context=".fuelisticv2client.LoginSignUp.Login">
 
@@ -21,16 +21,17 @@
             android:padding="5dp"
             android:src="@drawable/back_icon" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/aclonica"
-            android:text="hello there...\nWelcome Back"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            android:textSize="40sp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/aclonica"
+            android:text="hello there...\nWelcome"
+            android:textAllCaps="true"
+            android:textColor="#2B2929"
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/black_border"
                 android:padding="7dp"
+
                 app:ccp_autoDetectCountry="true"
                 app:ccp_showFlag="true"
                 app:ccp_showFullName="true"
@@ -57,12 +59,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/login_country_code_picker"
                 android:hint="Mobile Number"
-                android:textColorHint="@color/black"
+                android:textColorHint="#CE4D4B4B"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/black"
-                app:hintTextColor="@color/black"
+                app:hintTextColor="#2C2B2B"
                 app:startIconTint="@color/black">
 
 
@@ -86,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/login_phone_number"
                 android:hint="Password"
-                android:textColorHint="@color/black"
+                android:textColorHint="#CE4D4B4B"
                 app:boxStrokeColor="@color/black"
                 app:boxStrokeWidthFocused="2dp"
                 app:endIconMode="password_toggle"
@@ -115,25 +117,31 @@
                 android:layout_marginTop="10dp">
 
 
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_toEndOf="@+id/remember_me"
+                    android:background="#00000000"
+                    android:text="@string/forgot_password" />
+
                 <CheckBox
                     android:id="@+id/remember_me"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:buttonTint="@color/black"
-                    android:text="Remember Me"
+                    android:text="@string/remember_me"
+
                     android:textColor="@color/black" />
-
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:background="#00000000"
-
-                    android:text="Forgot Password" />
 
 
             </RelativeLayout>
@@ -144,23 +152,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/forget_password_block"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="28dp"
                 android:background="@color/black"
                 android:onClick="letUserLogIn"
                 android:text="Login"
-                android:textColor="@color/white" />
+                android:textColor="#ffff"
+                android:textSize="30dp" />
 
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/letTheUserLogIn"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="117dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="106dp"
                 android:background="#00000000"
                 android:onClick="callSignUpScreen"
                 android:text="Create Account" />
-
 
             <RelativeLayout
                 android:id="@+id/login_progress_bar"
@@ -169,7 +180,7 @@
                 android:layout_centerInParent="true"
                 android:background="@drawable/white_circle"
                 android:elevation="8dp"
-                android:padding="20dp"
+                android:padding="15dp"
                 android:visibility="gone">
 
 
