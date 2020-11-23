@@ -155,7 +155,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void logOut() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("SignOut")
+        builder.setTitle("LogOut")
                 .setMessage("Are you sure you want to log out?")
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
