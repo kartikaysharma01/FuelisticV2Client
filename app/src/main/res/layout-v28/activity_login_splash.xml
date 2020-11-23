@@ -29,8 +29,8 @@
         android:text="Fuelistic"
         android:textAllCaps="false"
         android:textColor="#2B2929"
-        android:textFontWeight="10000"
-        android:textSize="40sp"
+        android:textSize="50dp"
+
         android:textStyle="bold|normal"
         app:layout_constraintBottom_toBottomOf="@id/splash_screen_logo"
         app:layout_constraintEnd_toEndOf="@id/splash_screen_logo"

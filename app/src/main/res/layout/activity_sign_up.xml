@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fuelisticv2client.LoginSignUp.SignUp"
-    android:background="@color/colorBackground"
+    android:background="@drawable/back"
     android:padding="30dp">
 
     <LinearLayout
@@ -176,6 +176,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="next"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:layout_marginTop="20dp"
             android:background="@color/black"
             android:textColor="#fff"
@@ -188,8 +190,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             android:background="#00000000"
+            android:fontFamily="@font/aclonica"
             android:textColor="@color/black"
             android:onClick="callLoginScreen"
             android:elevation="5dp"/>

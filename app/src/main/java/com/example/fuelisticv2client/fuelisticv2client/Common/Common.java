@@ -17,7 +17,6 @@ import android.text.style.StyleSpan;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.fuelisticv2client.R;
@@ -43,6 +42,7 @@ public class Common {
     public static final String NOTI_TITLE = "title";
     public static final String NOTI_CONTENT = "content";
     public static final String SHIPPING_ORDER_REF = "ShippingOrder";
+    public static final String IS_OPEN_ACTIVITY_NEW_ORDER = "isOpenActivityNewOrder";
     private static final String TOKEN_REF = "Tokens";
 
     public static UserModel currentUser;
@@ -51,13 +51,11 @@ public class Common {
     public static ShippingOrderModel currentShippingOrder;
 
     public static String createOrderNumber() {
-        return new StringBuilder()
-                .append(System.currentTimeMillis())
-                .append(Math.abs(new Random().nextInt()))
-                .toString();
+        return String.valueOf(System.currentTimeMillis()) +
+                Math.abs(new Random().nextInt());
     }
 
-    public static String converStatusToText(int orderStatus) {
+    public static String convertStatusToText(int orderStatus) {
         switch (orderStatus){
             case 0:
                 return "Placed";
@@ -106,7 +104,7 @@ public class Common {
     }
 
     public static String createTopicOrder() {
-        return new StringBuilder("/topics/new_order").toString();
+        return "/topics/new_order";
     }
 
     public static void showNotification(Context context, int id, String title, String content, Intent intent) {
@@ -145,7 +143,6 @@ public class Common {
     }
 
     public static void updateToken(Context context, String newToken) {
-
         if(Common.currentUser!=null){
             FirebaseDatabase.getInstance()
                     .getReference(Common.TOKEN_REF)

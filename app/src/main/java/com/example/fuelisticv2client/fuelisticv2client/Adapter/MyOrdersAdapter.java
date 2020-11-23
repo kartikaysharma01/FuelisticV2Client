@@ -68,7 +68,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         .append(simpleDateFormat.format(date)));
         holder.txt_delivery_date.setText(new StringBuilder("Delivery date: ").append(orderList.get(position).getDeliveryDate()));
         holder.txt_order_amount.setText(new StringBuilder("Amount: Rs ").append(orderList.get(position).getTotalPayment()));
-        holder.txt_order_status.setText(new StringBuilder("Status: ").append(Common.converStatusToText(orderList.get(position).getOrderStatus())));
+        holder.txt_order_status.setText(new StringBuilder("Status: ").append(Common.convertStatusToText(orderList.get(position).getOrderStatus())));
 
         holder.setRecyclerClickListener((view, position1) -> showDialog(position1));
 
@@ -93,7 +93,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.MyView
         TextInputEditText order_details_delivery_date= (TextInputEditText) layout_dialog.findViewById(R.id.order_details_delivery_date);
 
         order_details_order_num.setText(orderList.get(position).getOrderNumber());
-        order_details_order_status.setText(Common.converStatusToText(orderList.get(position).getOrderStatus()) );
+        order_details_order_status.setText(Common.convertStatusToText(orderList.get(position).getOrderStatus()) );
         order_details_transaction_id.setText(orderList.get(position).getTransactionId());
         order_details_delivery_address.setText(orderList.get(position).getShippingAddress());
         order_details_delivery_charge.setText(Integer.toString(orderList.get(position).getDeliveryCharge()));

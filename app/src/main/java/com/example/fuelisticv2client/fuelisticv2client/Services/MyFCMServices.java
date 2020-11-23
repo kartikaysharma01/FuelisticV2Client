@@ -1,8 +1,11 @@
 package com.example.fuelisticv2client.fuelisticv2client.Services;
 
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 
 import com.example.fuelisticv2client.fuelisticv2client.Common.Common;
+import com.example.fuelisticv2client.fuelisticv2client.LoginSignUp.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -12,10 +15,21 @@ import java.util.Random;
 public class MyFCMServices extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        Map<String,String> dataRecv = remoteMessage.getData();
+      Map<String,String> dataRecv = remoteMessage.getData();
         if(dataRecv != null)
         {
-            Common.showNotification(this, new Random().nextInt(),
+            if(dataRecv.get(Common.NOTI_TITLE).equals("New Order"))
+            {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra(Common.IS_OPEN_ACTIVITY_NEW_ORDER, true);
+                Common.showNotification(this, new Random().nextInt(),
+                        dataRecv.get(Common.NOTI_TITLE),
+                        dataRecv.get(Common.NOTI_CONTENT),
+                        intent);
+
+            }
+            else
+                Common.showNotification(this, new Random().nextInt(),
                     dataRecv.get(Common.NOTI_TITLE),
                     dataRecv.get(Common.NOTI_CONTENT),
                     null);

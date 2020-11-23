@@ -21,6 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".fuelisticv2client.LoginSignUp.onboarding1" />
+        <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder2nd" />
+        <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder" />
+
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,14 +38,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+
         <activity
             android:name=".fuelisticv2client.TrackingOrderActivity"
             android:label="@string/title_activity_tracking_order">
 
         </activity>
 
-        <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder2nd" />
-        <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder" />
         <activity
             android:name=".fuelisticv2client.UI.HomeActivity"
             android:label="@string/title_activity_home"

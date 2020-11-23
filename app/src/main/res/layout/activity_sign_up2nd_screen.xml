@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fuelisticv2client.LoginSignUp.SignUp2ndScreen"
-    android:background="@color/colorBackground"
+    android:background="@drawable/back"
     android:padding="30dp">
 
     <LinearLayout
@@ -22,14 +22,14 @@
             android:textColor="@color/black"
             android:textSize="40sp"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="36dp"
             app:fontFamily="@font/aclonica" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="30dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -95,7 +95,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="next"
-            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
             android:background="@color/black"
             android:textColor="#fff"
             android:elevation="5dp"
@@ -103,15 +104,7 @@
             android:fontFamily="@font/aclonica"/>
 
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:layout_marginTop="20dp"
-            android:background="#00000000"
-            android:textColor="@color/black"
-            android:onClick="callLoginScreen"
-            android:elevation="5dp"/>
+
 
     </LinearLayout>
 

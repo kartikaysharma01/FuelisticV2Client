@@ -11,6 +11,18 @@
     <string name="menu_home">Home</string>
     <string name="menu_myOrders">My Orders</string>
     <string name="menu_faq">FAQs</string>
+
+    <string name="get_started">Get Started</string>
+    <string name="skip">Skip</string>
+    <string name="d1">Get fuel at Your Doorsteps</string>
+    <string name="h1">ORDER NOW</string>
+    <string name="h2">MANAGE ORDERS</string>
+    <string name="h3">EXPAND BUSINESS</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="login">Login</string>
+
+
     <string name="order_statistics">Price Statistics</string>
     <string name="update">Update</string>
     <string name="title_activity_tracking_order">Map</string>

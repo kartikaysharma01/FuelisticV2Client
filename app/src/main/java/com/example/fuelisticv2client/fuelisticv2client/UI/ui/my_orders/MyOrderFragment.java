@@ -1,16 +1,13 @@
 package com.example.fuelisticv2client.fuelisticv2client.UI.ui.my_orders;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,18 +25,10 @@ import com.example.fuelisticv2client.fuelisticv2client.Common.MySwipeHelper;
 import com.example.fuelisticv2client.fuelisticv2client.Model.OrderModel;
 import com.example.fuelisticv2client.fuelisticv2client.Model.ShippingOrderModel;
 import com.example.fuelisticv2client.fuelisticv2client.TrackingOrderActivity;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -157,7 +146,7 @@ public class MyOrderFragment extends Fragment implements ILoadOrderCallbackListe
                                 dialog.show();
                             } else {
                                 Toast.makeText(getContext(), new StringBuilder("You order's status changed to ")
-                                        .append(Common.converStatusToText(orderModel.getOrderStatus()))
+                                        .append(Common.convertStatusToText(orderModel.getOrderStatus()))
                                         .append(", so it can't cancel it!"), Toast.LENGTH_LONG).show();
 
                             }
