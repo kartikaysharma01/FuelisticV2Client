@@ -135,7 +135,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_wallet:
-                logOut();
+                Toast.makeText(this, "To be implemented soon", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.nav_sellFuel:
+                Toast.makeText(this, "The user will be transferred to the seller app in the Play Store.", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.nav_goldUpgrade:
+
                 break;
 
             case R.id.nav_logout:
