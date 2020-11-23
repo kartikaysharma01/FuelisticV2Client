@@ -13,13 +13,10 @@ public class MyFCMServices extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         Map<String,String> dataRecv = remoteMessage.getData();
-        if(dataRecv != null)
-        {
-            Common.showNotification(this, new Random().nextInt(),
-                    dataRecv.get(Common.NOTI_TITLE),
-                    dataRecv.get(Common.NOTI_CONTENT),
-                    null);
-        }
+        Common.showNotification(this, new Random().nextInt(),
+                dataRecv.get(Common.NOTI_TITLE),
+                dataRecv.get(Common.NOTI_CONTENT),
+                null);
     }
 
     @Override

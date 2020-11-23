@@ -17,16 +17,11 @@ import android.text.style.StyleSpan;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.fuelisticv2client.R;
 import com.example.fuelisticv2client.fuelisticv2client.Model.TokenModel;
 import com.example.fuelisticv2client.fuelisticv2client.Model.UserModel;
-import com.example.fuelisticv2client.fuelisticv2client.Services.MyFCMServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Random;
@@ -44,10 +39,8 @@ public class Common {
     public static final double diesel_price = 62.09;
 
     public static String createOrderNumber() {
-        return new StringBuilder()
-                .append(System.currentTimeMillis())
-                .append(Math.abs(new Random().nextInt()))
-                .toString();
+        return String.valueOf(System.currentTimeMillis()) +
+                Math.abs(new Random().nextInt());
     }
 
     public static String converStatusToText(int orderStatus) {
@@ -99,7 +92,7 @@ public class Common {
     }
 
     public static String createTopicOrder() {
-        return new StringBuilder("/topics/new_order").toString();
+        return "/topics/new_order";
     }
 
     public static void showNotification(Context context, int id, String title, String content, Intent intent) {
@@ -138,11 +131,13 @@ public class Common {
     }
 
     public static void updateToken(Context context, String newToken) {
-        FirebaseDatabase.getInstance()
-                .getReference(Common.TOKEN_REF)
-                .child(Common.currentUser.getPhoneNo())
-            .setValue(new TokenModel(Common.currentUser.getPhoneNo(), newToken))
-                .addOnFailureListener(e -> Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show());
+        if(Common.currentUser!=null){
+            FirebaseDatabase.getInstance()
+                    .getReference(Common.TOKEN_REF)
+                    .child(Common.currentUser.getPhoneNo())
+                    .setValue(new TokenModel(Common.currentUser.getPhoneNo(), newToken))
+                    .addOnFailureListener(e -> Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show());
+        }
 
     }
 }

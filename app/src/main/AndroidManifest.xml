@@ -12,10 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".fuelisticv2client.LoginSignUp.onboarding1" />
         <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder2nd" />
-
-        <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder"/>
-
+        <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder" />
         <activity
             android:name=".fuelisticv2client.UI.HomeActivity"
             android:label="@string/title_activity_home"
@@ -27,7 +26,6 @@
         <activity android:name=".fuelisticv2client.LoginSignUp.Login" />
         <activity android:name=".fuelisticv2client.LoginSignUp.AppStartupScreen" />
         <activity android:name=".fuelisticv2client.LoginSignUp.MainActivity" />
-
         <activity android:name=".fuelisticv2client.LoginSignUp.LogoSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +36,7 @@
 
         <service android:name=".fuelisticv2client.Services.MyFCMServices">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
