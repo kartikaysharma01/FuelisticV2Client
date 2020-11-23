@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_my_order, R.id.nav_faq, R.id.nav_myProfile)
+                R.id.nav_home, R.id.nav_my_order, R.id.nav_faq, R.id.nav_myProfile , R.id.nav_contactUs)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -130,6 +130,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 navController.navigate(R.id.nav_myProfile);
                 break;
 
+            case R.id.nav_contactUs:
+                navController.navigate(R.id.nav_contactUs);
+                break;
+
+            case R.id.nav_wallet:
+                Toast.makeText(this, "To be implemented soon", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.nav_sellFuel:
+                Toast.makeText(this, "The user will be transferred to the seller app in the Play Store.", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.nav_goldUpgrade:
+
+                break;
+
             case R.id.nav_logout:
                 logOut();
                 break;
@@ -139,7 +155,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void logOut() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("SignOut")
+        builder.setTitle("LogOut")
                 .setMessage("Are you sure you want to log out?")
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override

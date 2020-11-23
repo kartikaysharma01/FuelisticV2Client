@@ -11,7 +11,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_myOrders">My Orders</string>
     <string name="menu_faq">FAQs</string>
-    <string name="order_statistics">Order Statistics</string>
+
     <string name="get_started">Get Started</string>
     <string name="skip">Skip</string>
     <string name="d1">Get fuel at Your Doorsteps</string>
@@ -22,4 +22,8 @@
     <string name="remember_me">Remember Me</string>
     <string name="login">Login</string>
 
+
+    <string name="order_statistics">Price Statistics</string>
+    <string name="update">Update</string>
+    <string name="title_activity_tracking_order">Map</string>
 </resources>

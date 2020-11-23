@@ -20,10 +20,19 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 
 import com.example.fuelisticv2client.R;
+import com.example.fuelisticv2client.fuelisticv2client.Model.ShippingOrderModel;
 import com.example.fuelisticv2client.fuelisticv2client.Model.TokenModel;
 import com.example.fuelisticv2client.fuelisticv2client.Model.UserModel;
+
+import com.example.fuelisticv2client.fuelisticv2client.Services.MyFCMServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Common {
@@ -32,11 +41,13 @@ public class Common {
     public static final String ORDER_REF = "Orders";
     public static final String NOTI_TITLE = "title";
     public static final String NOTI_CONTENT = "content";
+    public static final String SHIPPING_ORDER_REF = "ShippingOrder";
     private static final String TOKEN_REF = "Tokens";
 
     public static UserModel currentUser;
 
     public static final double diesel_price = 62.09;
+    public static ShippingOrderModel currentShippingOrder;
 
     public static String createOrderNumber() {
         return String.valueOf(System.currentTimeMillis()) +
@@ -139,5 +150,37 @@ public class Common {
                     .addOnFailureListener(e -> Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show());
         }
 
+    }
+
+    public static List<LatLng> decodePoly(String encoded) {
+        List poly = new ArrayList();
+        int index = 0, len = encoded.length();
+        int lat =0 , lng=0;
+        while (index<len)
+        {
+            int b, shift= 0, result =0;
+            do {
+                b = encoded.charAt(index++)- 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b> 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result>>1):(result>>1) );
+            lat += dlat;
+
+            shift =0;
+            result = 0;
+
+            do {
+                b = encoded.charAt(index++)- 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b> 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result>>1):(result>>1) );
+            lng += dlng;
+
+            LatLng p = new LatLng(((double)lat / 1E5), ((double)lng / 1E5));
+            poly.add(p);
+        }
+        return poly;
     }
 }
