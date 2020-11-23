@@ -26,6 +26,8 @@ import com.example.fuelisticv2client.fuelisticv2client.Callback.ILoadOrderCallba
 import com.example.fuelisticv2client.fuelisticv2client.Common.Common;
 import com.example.fuelisticv2client.fuelisticv2client.Common.MySwipeHelper;
 import com.example.fuelisticv2client.fuelisticv2client.Model.OrderModel;
+import com.example.fuelisticv2client.fuelisticv2client.Model.ShippingOrderModel;
+import com.example.fuelisticv2client.fuelisticv2client.TrackingOrderActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -162,6 +164,38 @@ public class MyOrderFragment extends Fragment implements ILoadOrderCallbackListe
 
                         }));
 
+                buf.add(new UnderlayButton(getContext(), "Track Order", 30, 0, Color.parseColor("#001970"),
+                        pos -> {
+                            OrderModel orderModel = ((MyOrdersAdapter) recycler_orders.getAdapter()).getItemAtPosition(pos);
+
+                            // Fetch from Firebase
+                            FirebaseDatabase.getInstance().getReference(Common.SHIPPING_ORDER_REF)
+                                    .child(orderModel.getOrderNumber())
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if(snapshot.exists()){
+                                                Common.currentShippingOrder = snapshot.getValue(ShippingOrderModel.class);
+                                                if(Common.currentShippingOrder.getCurrentLat()!= -1 &&
+                                                        Common.currentShippingOrder.getCurrentLng()!= -1){
+                                                        startActivity(new Intent(getContext(), TrackingOrderActivity.class));
+                                                }
+                                                else {
+                                                    Toast.makeText(getContext(), "The bowser is not out for delivery yet!!", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                            else {
+                                                Toast.makeText(getContext(), "The bowser is not out for delivery yet!!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            Toast.makeText(getContext(), ""+error.getMessage() , Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                        }));
 
             }
         };

@@ -2,9 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fuelisticv2client">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
 
     <application
         android:allowBackup="true"
@@ -13,10 +20,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".fuelisticv2client.TrackingOrderActivity"
+            android:label="@string/title_activity_tracking_order">
+
+        </activity>
+
         <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder2nd" />
-
-        <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder"/>
-
+        <activity android:name=".fuelisticv2client.UI.ui.PlaceOrder" />
         <activity
             android:name=".fuelisticv2client.UI.HomeActivity"
             android:label="@string/title_activity_home"
@@ -28,7 +52,6 @@
         <activity android:name=".fuelisticv2client.LoginSignUp.Login" />
         <activity android:name=".fuelisticv2client.LoginSignUp.AppStartupScreen" />
         <activity android:name=".fuelisticv2client.LoginSignUp.MainActivity" />
-
         <activity android:name=".fuelisticv2client.LoginSignUp.LogoSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,9 +62,11 @@
 
         <service android:name=".fuelisticv2client.Services.MyFCMServices">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+
 
         <meta-data
             android:name="preloaded_fonts"

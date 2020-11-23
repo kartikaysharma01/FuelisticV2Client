@@ -134,6 +134,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 navController.navigate(R.id.nav_contactUs);
                 break;
 
+            case R.id.nav_wallet:
+                logOut();
+                break;
+
             case R.id.nav_logout:
                 logOut();
                 break;
