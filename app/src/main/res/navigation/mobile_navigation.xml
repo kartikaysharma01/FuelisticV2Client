@@ -35,4 +35,10 @@
         android:label="Contact Us"
         tools:layout="@layout/contact_us_fragment" />
 
+    <fragment
+        android:id="@+id/nav_goldUpgrade"
+        android:name="com.example.fuelisticv2client.fuelisticv2client.UI.ui.UpgadeToGold.UpgradeFragment"
+        android:label="Upgrade to Gold"
+        tools:layout="@layout/fragment_upgrade" />
+
 </navigation>

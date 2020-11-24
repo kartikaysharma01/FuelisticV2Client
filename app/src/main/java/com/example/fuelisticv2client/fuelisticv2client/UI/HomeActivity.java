@@ -37,9 +37,14 @@ import androidx.appcompat.widget.Toolbar;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static NavigationView navigationView;
     private AppBarConfiguration mAppBarConfiguration;
     private DrawerLayout drawer;
     private NavController navController;
+    private int menuClick = -1;
+
+
+
 
 
     @Override
@@ -61,14 +66,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
+
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_my_order, R.id.nav_faq, R.id.nav_myProfile , R.id.nav_contactUs)
+                R.id.nav_home, R.id.nav_my_order, R.id.nav_faq, R.id.nav_myProfile , R.id.nav_contactUs , R.id.nav_goldUpgrade)
                 .setDrawerLayout(drawer)
                 .build();
+
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -80,6 +87,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         TextView txt_hello = headerView.findViewById(R.id.txt_hello);
         Common.setSpanString("Hello,\n", Common.currentUser.getFullName(), txt_hello);
 
+        menuClick = R.id.nav_home;      //Default
+
+
+
+    }
+
+    public static void hideUpgrade() {
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.nav_goldUpgrade).setVisible(false);
 
     }
 
@@ -113,25 +129,41 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setChecked(true);
         drawer.closeDrawers();
+
         switch (item.getItemId()) {
             case R.id.nav_home:
-                navController.navigate(R.id.nav_home);
+                if (item.getItemId() != menuClick) {
+                    navController.popBackStack();
+                    navController.navigate(R.id.nav_home);
+                }
                 break;
 
             case R.id.nav_my_order:
-                navController.navigate(R.id.nav_my_order);
+                if (item.getItemId() != menuClick) {
+                    navController.popBackStack();
+                    navController.navigate(R.id.nav_my_order);
+                }
                 break;
 
             case R.id.nav_faq:
-                navController.navigate(R.id.nav_faq);
+                if (item.getItemId() != menuClick) {
+                    navController.popBackStack();
+                    navController.navigate(R.id.nav_faq);
+                }
                 break;
 
             case R.id.nav_myProfile:
-                navController.navigate(R.id.nav_myProfile);
+                if (item.getItemId() != menuClick) {
+                    navController.popBackStack();
+                    navController.navigate(R.id.nav_myProfile);
+                }
                 break;
 
             case R.id.nav_contactUs:
-                navController.navigate(R.id.nav_contactUs);
+                if (item.getItemId() != menuClick) {
+                    navController.popBackStack();
+                    navController.navigate(R.id.nav_contactUs);
+                }
                 break;
 
             case R.id.nav_wallet:
@@ -143,13 +175,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_goldUpgrade:
-
+                if (item.getItemId() != menuClick) {
+                    navController.popBackStack();
+                    navController.navigate(R.id.nav_goldUpgrade);
+                }
                 break;
 
             case R.id.nav_logout:
                 logOut();
                 break;
+
+            default:
+                menuClick = -1;
+                break;
         }
+        menuClick = item.getItemId();
         return true;
     }
 
