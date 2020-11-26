@@ -3,10 +3,13 @@ package com.example.fuelisticv2client.fuelisticv2client.UI;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -35,6 +39,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import io.paperdb.Paper;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static NavigationView navigationView;
@@ -42,9 +48,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private NavController navController;
     private int menuClick = -1;
-
-
-
 
 
     @Override
@@ -72,7 +75,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_my_order, R.id.nav_faq, R.id.nav_myProfile , R.id.nav_contactUs , R.id.nav_goldUpgrade)
+                R.id.nav_home, R.id.nav_my_order, R.id.nav_faq, R.id.nav_myProfile, R.id.nav_contactUs, R.id.nav_goldUpgrade)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -90,7 +93,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         menuClick = R.id.nav_home;      //Default
 
 
-
     }
 
     public static void hideUpgrade() {
@@ -102,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void updateToken() {
         FirebaseInstanceId.getInstance()
                 .getInstanceId()
-                .addOnFailureListener(e -> Toast.makeText(HomeActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(HomeActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show())
                 .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
@@ -114,6 +116,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home, menu);
         return true;
     }
 
@@ -191,6 +195,60 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         menuClick = item.getItemId();
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_sub_to_news:
+                showSubscribeNews();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showSubscribeNews() {
+        Paper.init(this);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("News System");
+        builder.setMessage("Get notifications about new offers and coupons?");
+
+        View itemView = LayoutInflater.from(this).inflate(R.layout.layout_subscribe_news, null);
+        CheckBox ckb_news = (CheckBox)itemView.findViewById(R.id.ckb_subscribe_news);
+        boolean isSubscribeNews = Paper.book().read(Common.IS_SUBSCRIBE_NEWS,false);
+
+        if(isSubscribeNews)
+            ckb_news.setChecked(true);
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        }).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(ckb_news.isChecked()){
+                    Paper.book().write(Common.IS_SUBSCRIBE_NEWS, true);
+                    FirebaseMessaging.getInstance()
+                            .subscribeToTopic(Common.NEWS_TOPIC)
+                            .addOnFailureListener(e -> Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show())
+                            .addOnSuccessListener(aVoid -> Toast.makeText(HomeActivity.this, "Subscribed Successfully!!", Toast.LENGTH_SHORT).show());
+                }
+                else {
+                    Paper.book().delete(Common.IS_SUBSCRIBE_NEWS);
+                    FirebaseMessaging.getInstance()
+                            .unsubscribeFromTopic(Common.NEWS_TOPIC)
+                            .addOnFailureListener(e -> Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show())
+                            .addOnSuccessListener(aVoid -> Toast.makeText(HomeActivity.this, "Unsubscribed Successfully!!", Toast.LENGTH_SHORT).show());
+                }
+            }
+        });
+        builder.setView(itemView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void logOut() {
