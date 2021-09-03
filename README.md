@@ -1,4 +1,4 @@
-<img height='175' src="https://i.imgur.com/jXwmFRH.png" align="left" hspace="1" vspace="1">
+<img height='175' width=300 src="https://i.imgur.com/jXwmFRH.png" align="left" hspace="1" vspace="1">
 
 # Fuelistic - Delivery application Suite
 
